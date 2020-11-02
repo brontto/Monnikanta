@@ -5,4 +5,4 @@ Keskeisiä ominaisuuksia ovat myös pokemonin lisääminen, poistaminen ja päiv
 Sovellukseen voisi myös tehdä käyttäjäprofiilin johon voi lisätä tiedon että mitkä pokemonit itsellä on. 
 
 ### Heroku
-[Monnikanta](monnikanta.herokuapp.com)
+[Monnikanta](https://monnikanta.herokuapp.com/)
