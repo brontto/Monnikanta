@@ -74,7 +74,7 @@ def signup():
 def pokemons():
     result = db.session.execute("SELECT COUNT(*) FROM pokemons")
     count = result.fetchone()[0]
-    result = db.session.execute("SELECT name FROM pokemons")
+    result = db.session.execute("SELECT * FROM pokemons")
     pokemons = result.fetchall()
     return render_template("pokemons.html", count=count, pokemons=pokemons) 
 
