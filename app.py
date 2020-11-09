@@ -80,7 +80,7 @@ def pokemons():
 
 @app.route("/pokemons/<int:id>")
 def pokemon(id):
-    sql = "SELECT name FROM pokemons WHERE id=id"
+    sql = "SELECT name FROM pokemons WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
-    pokemon = result.fetchall()
-    return pokemon
+    pokemon = result.fetchone()[0]
+    return str(pokemon)
