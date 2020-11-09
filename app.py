@@ -83,4 +83,4 @@ def pokemon(id):
     sql = "SELECT name FROM pokemons WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
     pokemon = result.fetchone()[0]
-    return str(pokemon)
+    return pokemon
