@@ -6,3 +6,8 @@ Sovellukseen voisi myös tehdä käyttäjäprofiilin johon voi lisätä tiedon e
 
 ### Heroku
 [Monnikanta](https://monnikanta.herokuapp.com/)
+
+
+### Tilanne
+
+Tällä hetkellä sovelluksessa toimii tunnusten luonti ja sisään kirjautuminen sekä pokemonien selaaminen.
