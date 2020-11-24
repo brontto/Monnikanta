@@ -1,6 +1,17 @@
 Pokemonien määrä: {{ count }}
-<hr>
+
+
 {% for pokemon in pokemons %}
-<a href="/pokemons/{{ pokemon[0] }}"> {{ pokemon[0] }} {{ pokemon[1] }}</a>
 <hr>
+<a href="/pokemons/{{ pokemon[0] }}"> {{ pokemon[0] }} {{ pokemon[1] }}  </a>
+<p>{{ pokemon[2] }} {{ pokemon[3] }}</p>
+{% if session.username %}
+<form action="/profile" method="POST">
+    <input type="hidden" name="id" value="{{ pokemon[0] }}">
+    <input type="submit" value="Lisää pokedecksiin">
+</form>
+{% endif %}
 {% endfor %}
+<hr>
+
+<a href="/">Etusivu</a>

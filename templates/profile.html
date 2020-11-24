@@ -1,0 +1,14 @@
+{% if session.username %}
+<p>Olet kirjautunut nimellä {{ session.username }}</p>
+{% if pokemons %}
+{% for pokemon in pokemons %}
+<hr>
+<a href="/pokemons/{{ pokemon[0] }}"> {{ pokemon[0] }} {{ pokemon[1] }}</a>
+{% endfor %}
+<hr>
+<a href="/pokemons">Selaa pokemoneja</a>
+{% endif %}
+{% else %}
+<p>Et ole kirjautuneena sisään</p>
+{% endif %}
+<a href="/">Etusivu</a>

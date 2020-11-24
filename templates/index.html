@@ -1,9 +1,13 @@
 {% if session.username %}
 <p>Olet kirjautunut nimellä {{ session.username }}</p>
+
+
 <a href="/logout">Kirjaudu ulos</a>
+<a href="/profile">Näytä profiili</a>
+
 {% else %}
-    {% if error %}
-        <p class=error><strong>Error:</strong> {{ error }}
+{% if error %}
+<p class=error><strong>Error:</strong> {{ error }}
     {% endif %}
 <form action="/login" method="POST">
     <p>Tunnus:<br>
@@ -13,5 +17,6 @@
     <input type="submit" value="Kirjaudu">
 </form>
 <a href="/signup">Luo tunnus</a>
-<a href="/pokemons">Selaa pokemoneja</a>
+
 {% endif %}
+<a href="/pokemons">Selaa pokemoneja</a>

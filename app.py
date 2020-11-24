@@ -16,6 +16,8 @@ app.secret_key = getenv("SECRET_KEY")
 def index():
     return render_template("index.html")
 
+
+
 @app.route("/login", methods=["POST"])
 def login():
     username = request.form["username"]
@@ -84,3 +86,31 @@ def pokemon(id):
     result = db.session.execute(sql, {"id":id})
     pokemon = result.fetchone()[0]
     return pokemon
+
+@app.route("/profile")
+def profile():
+    sql = "SELECT * FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":session["username"]})
+    user = result.fetchone()
+    print(user)
+    sql = "SELECT pokemons.name FROM userPokemons JOIN pokemons ON pokemons.id = userPokemons.pokemon_id WHERE user_id=:user_id"
+    result = db.session.execute(sql, {"user_id":user[0]})
+    pokemons = result.fetchall()
+    if pokemons != None:
+        return render_template("profile.html", pokemons=pokemons)
+        
+    return render_template("profile.html")
+
+@app.route("/profile", methods=["POST"])
+def profileadd():
+    id = request.form["id"]
+
+    sql = "SELECT id FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":session["username"]})
+    user = result.fetchone()    
+    print(id)
+    print(user)
+    sql = "INSERT INTO userpokemons (user_id, pokemon_id) VALUES (:user_id,:pokemon_id)"
+    db.session.execute(sql, {"user_id":user[0],"pokemon_id":id})
+    db.session.commit()
+    return redirect("/profile")
