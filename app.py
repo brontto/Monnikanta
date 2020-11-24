@@ -82,9 +82,9 @@ def pokemons():
 
 @app.route("/pokemons/<int:id>")
 def pokemon(id):
-    sql = "SELECT name FROM pokemons WHERE id=:id"
+    sql = "SELECT * FROM pokemons WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
-    pokemon = result.fetchone()[0]
+    pokemon = result.fetchone()[1]
     return pokemon
 
 @app.route("/profile")
@@ -92,8 +92,8 @@ def profile():
     sql = "SELECT * FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":session["username"]})
     user = result.fetchone()
-    print(user)
-    sql = "SELECT pokemons.name FROM userPokemons JOIN pokemons ON pokemons.id = userPokemons.pokemon_id WHERE user_id=:user_id"
+    
+    sql = "SELECT pokemons.id, pokemons.name FROM userPokemons JOIN pokemons ON pokemons.id = userPokemons.pokemon_id WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user[0]})
     pokemons = result.fetchall()
     if pokemons != None:
