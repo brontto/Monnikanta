@@ -16,27 +16,25 @@
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Kirjaudu ulos</a>
             </li>
-            {% else %}
-            <li class="nav-item">
-                <a class="nav-link" href="/signup">Luo tunnus</a>
-            </li>
-            {% endif %}
-            {% if admin %}
-            <li class="nav-item">
-                <a class="nav-link" href="/add">Lisää uusi pokemon tietokantaan</a>
-            </li>
             {% endif %}
         </ul>
     </nav>
-    <div class="row">
-        <div class="col-8">
-            <p>Pokemnoien määrä: {{ count }}</p>
-            <div class="list-group">
-                {% for pokemon in pokemons %}
-                <a href="/pokemons/{{ pokemon[0] }}" class="list-group-item list-group-item-action">{{ pokemon[0] }}. {{ pokemon[1] }}</a>
-                {% endfor %}
-            </div>
 
+    <form action="/add" method="POST">
+        <div class="form-group">
+            <label for="pokemonin nimi">Nimi</label>
+            <input type="text" class="form-control" name="name">
         </div>
-    </div>
+        <div class="form-group">
+            <label for="pokemonin tyyppi">Tyyppi</label>
+            <input type="text" class="form-control" name="type">
+        </div>
+        <div class="form-group">
+            <label for="kuvaus">Kuvaus</label>
+            <textarea class="form-control" name="kuvaus" rows="3"></textarea>
+        </div>
+        <div class="form-group col-6">
+            <input type="submit" class="btn btn-primary" value="Lisää">
+        </div>
+    </form>
 </div>

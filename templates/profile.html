@@ -17,6 +17,11 @@
                 <a class="nav-link" href="/logout">Kirjaudu ulos</a>
             </li>
             {% endif %}
+            {% if admin %}
+            <li class="nav-item">
+                <a class="nav-link" href="/add">Lisää uusi pokemon tietokantaan</a>
+            </li>
+            {% endif %}
         </ul>
     </nav>
     <div class="row">

@@ -14,6 +14,12 @@ app.secret_key = getenv("SECRET_KEY")
 
 @app.route("/")
 def index():
+    if session.get('username') != None:
+        sql = "SELECT * FROM users WHERE username=:username"
+        result = db.session.execute(sql, {"username":session["username"]})
+        user = result.fetchone()
+        return render_template("index.html", admin=user[3])
+
     return render_template("index.html")
 
 
@@ -55,6 +61,10 @@ def getsignup():
 def signup():
     username = request.form["username"]
     password = request.form["password"]
+    admin = request.form["admin"] != None
+
+    print("admin")
+    print(admin)
 
     sql = "SELECT username FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
@@ -65,8 +75,8 @@ def signup():
         error = "Käyttäjänimi on jo varattu"
     else:
         hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username,password) VALUES (:username,:password)"
-        db.session.execute(sql, {"username":username,"password":hash_value})
+        sql = "INSERT INTO users (username,password, admin) VALUES (:username,:password,:admin)"
+        db.session.execute(sql, {"username":username,"password":hash_value,"admin":admin})
         db.session.commit()
 
         session["username"] = username
@@ -80,6 +90,13 @@ def pokemons():
     count = result.fetchone()[0]
     result = db.session.execute("SELECT * FROM pokemons")
     pokemons = result.fetchall()
+
+    if session.get('username') != None:
+        sql = "SELECT * FROM users WHERE username=:username"
+        result = db.session.execute(sql, {"username":session["username"]})
+        user = result.fetchone()
+        return render_template("pokemons.html", count=count, pokemons=pokemons, admin=user[3]) 
+
     return render_template("pokemons.html", count=count, pokemons=pokemons) 
 
 @app.route("/pokemons/<int:id>")
@@ -87,10 +104,20 @@ def pokemon(id):
     sql = "SELECT * FROM pokemons WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
     pokemon = result.fetchone()
+    
+    if session.get('username') != None:
+        sql = "SELECT * FROM users WHERE username=:username"
+        result = db.session.execute(sql, {"username":session["username"]})
+        user = result.fetchone()
+        return render_template("pokemon.html", pokemon=pokemon, admin=user[3]) 
+
     return render_template("pokemon.html", pokemon=pokemon)
 
 @app.route("/profile")
 def profile():
+    if session.get('username') == None:
+        return redirect("/")
+
     sql = "SELECT * FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":session["username"]})
     user = result.fetchone()
@@ -98,10 +125,11 @@ def profile():
     sql = "SELECT pokemons.id, pokemons.name FROM userPokemons JOIN pokemons ON pokemons.id = userPokemons.pokemon_id WHERE user_id=:user_id"
     result = db.session.execute(sql, {"user_id":user[0]})
     pokemons = result.fetchall()
+    print(pokemons)
     if pokemons != None:
-        return render_template("profile.html", pokemons=pokemons)
+        return render_template("profile.html", pokemons=pokemons, admin=user[3])
         
-    return render_template("profile.html")
+    return render_template("profile.html", admin=user[3])
 
 @app.route("/profile", methods=["POST"])
 def profileadd():
@@ -111,8 +139,46 @@ def profileadd():
     result = db.session.execute(sql, {"username":session["username"]})
     user = result.fetchone()    
     print(id)
-    print(user)
+    print(user[0])
     sql = "INSERT INTO userpokemons (user_id, pokemon_id) VALUES (:user_id,:pokemon_id)"
     db.session.execute(sql, {"user_id":user[0],"pokemon_id":id})
     db.session.commit()
     return redirect("/profile")
+
+
+@app.route("/add")
+def add():
+    if session.get('username') == None:
+        return redirect("/")
+
+    sql = "SELECT * FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":session["username"]})
+    user = result.fetchone()
+
+    if user[3] == False:
+        return redirect("/")
+    
+    return render_template("add.html")
+
+@app.route("/add", methods=["POST"])
+def addpokemon():
+    if session.get('username') == None:
+        return redirect("/")
+
+    sql = "SELECT * FROM users WHERE username=:username"
+    result = db.session.execute(sql, {"username":session["username"]})
+    user = result.fetchone()
+
+    if user[3] == False:
+        return redirect("/")
+    
+    name = request.form["name"]
+    tyyppi = request.form["type"]
+    kuvaus = request.form["kuvaus"]
+
+    ('Pikachu','Electric','Sähkörotta')
+    sql = "INSERT INTO pokemons (name, type, description) VALUES (:name,:type,:kuvaus)"
+    db.session.execute(sql, {"name":name,"type":tyyppi,"kuvaus":kuvaus})
+    db.session.commit()
+
+    return redirect("/pokemons")

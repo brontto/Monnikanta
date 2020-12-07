@@ -9,7 +9,8 @@ INSERT INTO pokemons (name, type, description) VALUES ('Pikachu','Electric','Sä
 INSERT INTO pokemons (name, type, description) VALUES ('Bulbasaur','Grass','Kasvipokemon');
 INSERT INTO pokemons (name, type, description) VALUES ('Meow','Normal','Kissapokemon');
  
-CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT, password TEXT);
+CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT, password TEXT, admin BOOLEAN);
+
 
 CREATE TABLE userPokemons (
     user_id INTEGER REFERENCES users,
