@@ -61,7 +61,7 @@ def getsignup():
 def signup():
     username = request.form["username"]
     password = request.form["password"]
-    admin = request.form["admin"] != None
+    admin = request.form.get('admin') != None
 
     print("admin")
     print(admin)
@@ -75,7 +75,7 @@ def signup():
         error = "Käyttäjänimi on jo varattu"
     else:
         hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username,password, admin) VALUES (:username,:password,:admin)"
+        sql = "INSERT INTO users (username,password,admin) VALUES (:username,:password,:admin)"
         db.session.execute(sql, {"username":username,"password":hash_value,"admin":admin})
         db.session.commit()
 
