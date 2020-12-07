@@ -1,22 +1,59 @@
-{% if session.username %}
-<p>Olet kirjautunut nimellä {{ session.username }}</p>
-
-
-<a href="/logout">Kirjaudu ulos</a>
-<a href="/profile">Näytä profiili</a>
-
-{% else %}
-{% if error %}
-<p class=error><strong>Error:</strong> {{ error }}
-    {% endif %}
-<form action="/login" method="POST">
-    <p>Tunnus:<br>
-        <input type="text" name="username"></p>
-    <p>Salasana:<br>
-        <input type="password" name="password"></p>
-    <input type="submit" value="Kirjaudu">
-</form>
-<a href="/signup">Luo tunnus</a>
-
-{% endif %}
-<a href="/pokemons">Selaa pokemoneja</a>
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<title>Monnikanta</title>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light">
+        <a class="navbar-brand" href="/">Etusivu</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/pokemons">Selaa pokemoneja</a>
+            </li>
+            {% if session.username %}
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">Näytä profiili</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Kirjaudu ulos</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="/signup">Luo tunnus</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-8">
+            <h1>Terve!</h1>
+            <p>
+                Tämä on pokemontietokanta. Voit lisätä nappaamasi pokemonit listaan tai tarkastella mitä vielä puuttuu.
+        </div>
+        {% if session.username %}
+        <div class="col-4">
+            <p>
+                Olet kirjautunut nimellä {{ session.username }}
+            </p>
+        </div>
+        {% else %}
+        <div class="col-4">
+            {% if error %}
+            <p class=error><strong>Error:</strong> {{ error }}
+                {% endif %}
+            <form action="/login" method="POST">
+                <div class="form-group col-6">
+                    <label for="username">Tunnus</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group col-6">
+                    <label for="password">Salasana</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="form-group col-6">
+                    <input type="submit" class="btn btn-primary" value="Kirjaudu">
+                </div>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>

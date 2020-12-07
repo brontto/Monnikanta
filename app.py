@@ -49,7 +49,7 @@ def logout():
 
 @app.route("/signup")
 def getsignup():
-    return render_template("signup.html")
+   return render_template("signup.html")
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -59,7 +59,9 @@ def signup():
     sql = "SELECT username FROM users WHERE username=:username"
     result = db.session.execute(sql, {"username":username})
     user = result.fetchone()    
-    if user != None:
+    if username == "" or password == "":
+        error = "Täytä kaikki kentät"
+    elif user != None:
         error = "Käyttäjänimi on jo varattu"
     else:
         hash_value = generate_password_hash(password)
@@ -84,8 +86,8 @@ def pokemons():
 def pokemon(id):
     sql = "SELECT * FROM pokemons WHERE id=:id"
     result = db.session.execute(sql, {"id":id})
-    pokemon = result.fetchone()[1]
-    return pokemon
+    pokemon = result.fetchone()
+    return render_template("pokemon.html", pokemon=pokemon)
 
 @app.route("/profile")
 def profile():

@@ -1,11 +1,36 @@
-{% if error %}
-    <p class=error><strong>Error:</strong> {{ error }}
-{% endif %}
-<form action="/signup" method="POST">
-    <p>Tunnus:<br>
-        <input type="text" name="username"></p>
-    <p>Salasana:<br>
-        <input type="password" name="password"></p>
-    <input type="submit" value="Luo tunnus">
-</form>
-<a href="/">Etusivu</a>
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<title>Monnikanta</title>
+<div class="container">
+    <nav class="navbar navbar-expand-sm navbar-light">
+        <a class="navbar-brand" href="/">Etusivu</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/pokemons">Selaa pokemoneja</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="row">
+        <div class="col-8">
+            <h1>Terve!</h1>
+            {% if error %}
+            <p class=error><strong>Error:</strong> {{ error }}
+                {% endif %}
+            <form action="/signup" method="POST">
+                <div class="form-group col-6">
+                    <label for="username">Tunnus</label>
+                    <input type="text" class="form-control" name="username">
+                </div>
+                <div class="form-group col-6">
+                    <label for="password">Salasana</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="form-group col-6">
+                    <input type="submit" class="btn btn-primary" value="Luo tunnus">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
