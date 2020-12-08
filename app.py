@@ -129,7 +129,7 @@ def add():
     if user[3] == False:
         return redirect("/")
     
-    return render_template("add.html")
+    return render_template("add.html", admin=user[3])
 
 @app.route("/add", methods=["POST"])
 def addpokemon():

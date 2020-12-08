@@ -7,7 +7,7 @@
         <a class="navbar-brand" href="/">Etusivu</a>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="/pokemons">Selaa pokemoneja</a>
+                <a class="nav-link" href="/pokemons"><b>Selaa pokemoneja</b></a>
             </li>
             {% if session.username %}
             <li class="nav-item">
@@ -30,7 +30,7 @@
     </nav>
     <div class="row">
         <div class="col-8">
-            <p>Pokemnoien määrä: {{ count }}</p>
+            <p>Pokemonien määrä: {{ count }}</p>
             <div class="list-group">
                 {% for pokemon in pokemons %}
                 <a href="/pokemons/{{ pokemon[0] }}" class="list-group-item list-group-item-action">{{ pokemon[0] }}.
