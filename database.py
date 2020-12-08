@@ -49,10 +49,11 @@ def get_user_pokemons(id):
     pokemons = result.fetchall()
     return pokemons
 
-def get_pokemons_search(query):
-    sql = "SELECT * FROM pokemons WHERE name LIKE :query OR type LIKE :query OR description LIKE :query"
+def get_pokemons_search(query, hakutermi):
+    sql = "SELECT * FROM pokemons WHERE "+hakutermi+" LIKE :query"
     result = db.session.execute(sql, {"query":"%"+query+"%"})
     pokemons = result.fetchall()
+    print(pokemons)
     return pokemons
 
 def add_user(username, password, admin):
@@ -66,7 +67,7 @@ def add_userpokemon(user_id, pokemon_id):
     db.session.execute(sql, {"user_id":user_id,"pokemon_id":pokemon_id})
     db.session.commit()
     
-def add_pokemon(name, tyyppi, kuvaus):
-    sql = "INSERT INTO pokemons (name, type, description) VALUES (:name,:type,:kuvaus)"
-    db.session.execute(sql, {"name":name,"type":tyyppi,"kuvaus":kuvaus})
+def add_pokemon(nimi, tyyppi, kuvaus):
+    sql = "INSERT INTO pokemons (nimi, tyyppi, kuvaus) VALUES (:nimi,:tyyppi,:kuvaus)"
+    db.session.execute(sql, {"nimi":name,"tyyppi":tyyppi,"kuvaus":kuvaus})
     db.session.commit()

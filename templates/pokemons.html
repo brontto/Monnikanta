@@ -41,8 +41,16 @@
         <div class="col-4">
             <form action="/result" method="GET">
                 <div class="form-group">
+                    <label for="hakee">Minkä mukaan haetaan</label>
+                    <select class="form-control" name="hakutermi">
+                      <option>nimi</option>
+                      <option>tyyppi</option>
+                      <option>kuvaus</option>
+                    </select>
+                  </div>
+                <div class="form-group">
                     <label for="Hakusana">Hakusana</label>
-                    <input type="text" name="query">
+                    <input class="form-control" type="text" name="query">
                 </div>
                 <div>
                     <input type="submit" class="btn btn-primary" value="Hae">

@@ -83,7 +83,9 @@ def pokemons():
 @app.route("/result")
 def result():
     query = request.args["query"]
-    pokemons = database.get_pokemons_search(query)
+    hakutermi = request.args["hakutermi"]
+
+    pokemons = database.get_pokemons_search(query, hakutermi)
     count = len(pokemons)
     return render_template("pokemons.html", count=count, pokemons=pokemons)
 

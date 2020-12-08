@@ -3,11 +3,11 @@ DROP TABLE IF EXISTS userPokemons;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS pokemons;
 
-CREATE TABLE pokemons (id SERIAL PRIMARY KEY, name TEXT, type TEXT, description TEXT);
+CREATE TABLE pokemons (id SERIAL PRIMARY KEY, nimi TEXT, tyyppi TEXT, kuvaus TEXT);
 
-INSERT INTO pokemons (name, type, description) VALUES ('Pikachu','Electric','Sähkörotta');
-INSERT INTO pokemons (name, type, description) VALUES ('Bulbasaur','Grass','Kasvipokemon');
-INSERT INTO pokemons (name, type, description) VALUES ('Meow','Normal','Kissapokemon');
+INSERT INTO pokemons (nimi, tyyppi, kuvaus) VALUES ('Pikachu','Sähkö','Sähkörotta mallia vikkelä');
+INSERT INTO pokemons (nimi, tyyppi, kuvaus) VALUES ('Bulbasaur','Ruoho','Kasvipokemon ruoskii ku orjapiiskuri');
+INSERT INTO pokemons (nimi, tyyppi, kuvaus) VALUES ('Meow','Normaali','Kissapokemon sanoo miaaaaau');
  
 CREATE TABLE users (id SERIAL PRIMARY KEY, username TEXT, password TEXT, admin BOOLEAN);
 
