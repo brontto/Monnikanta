@@ -79,6 +79,13 @@ def pokemons():
         return render_template("pokemons.html", count=count, pokemons=pokemons, admin=user[3]) 
 
     return render_template("pokemons.html", count=count, pokemons=pokemons) 
+    
+@app.route("/result")
+def result():
+    query = request.args["query"]
+    pokemons = database.get_pokemons_search(query)
+    count = len(pokemons)
+    return render_template("pokemons.html", count=count, pokemons=pokemons)
 
 @app.route("/pokemons/<int:id>")
 def pokemon(id):
@@ -141,3 +148,4 @@ def addpokemon():
     database.add_pokemon(name, tyyppi, kuvaus)
 
     return redirect("/pokemons")
+

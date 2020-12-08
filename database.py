@@ -48,6 +48,12 @@ def get_user_pokemons(id):
     pokemons = result.fetchall()
     return pokemons
 
+def get_pokemons_search(query):
+    sql = "SELECT * FROM pokemons WHERE name LIKE :query OR type LIKE :query OR description LIKE :query"
+    result = db.session.execute(sql, {"query":"%"+query+"%"})
+    pokemons = result.fetchall()
+    return pokemons
+
 def add_user(username, password, admin):
     hash_value = generate_password_hash(password)
     sql = "INSERT INTO users (username,password,admin) VALUES (:username,:password,:admin)"

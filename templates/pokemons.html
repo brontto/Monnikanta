@@ -33,10 +33,21 @@
             <p>Pokemnoien määrä: {{ count }}</p>
             <div class="list-group">
                 {% for pokemon in pokemons %}
-                <a href="/pokemons/{{ pokemon[0] }}" class="list-group-item list-group-item-action">{{ pokemon[0] }}. {{ pokemon[1] }}</a>
+                <a href="/pokemons/{{ pokemon[0] }}" class="list-group-item list-group-item-action">{{ pokemon[0] }}.
+                    {{ pokemon[1] }}</a>
                 {% endfor %}
             </div>
-
+        </div>
+        <div class="col-4">
+            <form action="/result" method="GET">
+                <div class="form-group">
+                    <label for="Hakusana">Hakusana</label>
+                    <input type="text" name="query">
+                </div>
+                <div>
+                    <input type="submit" class="btn btn-primary" value="Lähetä">
+                </div>
+            </form>
         </div>
     </div>
 </div>
