@@ -63,6 +63,12 @@ def get_pokemons_search(query, hakutermi):
     pokemons = result.fetchall()
     return pokemons
 
+def get_pokemon_by_name(nimi):
+    sql = "SELECT * FROM pokemons WHERE nimi=:nimi" 
+    result = db.session.execute(sql, {"nimi":nimi})
+    pokemon = result.fetchone()
+    return pokemon  
+
 def add_user(username, password, admin):
     hash_value = generate_password_hash(password)
     sql = "INSERT INTO users (username,password,admin) VALUES (:username,:password,:admin)"

@@ -147,6 +147,16 @@ def addpokemon():
     tyyppi = request.form["type"]
     kuvaus = request.form["kuvaus"]
 
+    pokemon = database.get_pokemon_by_name(name)
+    if pokemon != None:
+        error = "Pokemon on jo tietokannassa"   
+        return render_template("add.html", error=error, admin=user[3])
+
+    if name == "" or tyyppi == "" or kuvaus == "":
+        error = "Täytä kaikki kentät"
+        return render_template("add.html", error=error, admin=user[3])
+
+
     database.add_pokemon(name, tyyppi, kuvaus)
 
     return redirect("/pokemons")
